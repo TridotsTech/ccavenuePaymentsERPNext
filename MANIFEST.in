@@ -1,0 +1,18 @@
+include MANIFEST.in
+include requirements.txt
+include *.json
+include *.md
+include *.py
+include *.txt
+recursive-include ccavenue_payment *.css
+recursive-include ccavenue_payment *.csv
+recursive-include ccavenue_payment *.html
+recursive-include ccavenue_payment *.ico
+recursive-include ccavenue_payment *.js
+recursive-include ccavenue_payment *.json
+recursive-include ccavenue_payment *.md
+recursive-include ccavenue_payment *.png
+recursive-include ccavenue_payment *.py
+recursive-include ccavenue_payment *.svg
+recursive-include ccavenue_payment *.txt
+recursive-exclude ccavenue_payment *.pyc

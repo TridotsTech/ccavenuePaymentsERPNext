@@ -1,0 +1,247 @@
+
+{% extends "templates/web.html" %}
+
+{% block title %} Payment {% endblock %}
+
+{%- block header -%}
+{% endblock %}
+
+{% block script %}
+ <script type="text/javascript">
+ 	
+ 	$(document).ready(function(){
+ 		   setTimeout(function() {
+                   submitPaymentForm();
+                }, 2000)
+		 			
+		 		
+ 		});
+ function submitPaymentForm()
+ {
+ 		var formdata=$("#PaymentForm").serialize();
+		 			var $form = $("#PaymentForm");
+				var formdata = getFormData($form);
+		 		
+		    $.ajax({
+                type:'POST',
+                Accept: 'application/json',
+                ContentType: 'application/json;charset=utf-8',
+                url:'/',
+                data:{'cmd':'ccavenue_payment.ccavenue_payment.doctype.ccavenue_settings.ccavenue_settings.ccavenue_request_payment',  
+                 "payment_info":JSON.stringify(formdata)
+               },
+                dataType: "json",
+                async: false,
+                success: function (data){
+                	$("#nonseamless").html(data.message);
+                	$("#nonseamless").submit();
+                }
+            });
+ }
+function getFormData($form){
+    var unindexed_array = $form.serializeArray();
+    var indexed_array = {};
+
+    $.map(unindexed_array, function(n, i){
+        indexed_array[n['name']] = n['value'];
+    });
+
+    return indexed_array;
+}
+ </script>
+{% endblock %}
+
+{%- block page_content -%}
+<div class="th-txt">
+		<div class="row">
+			<div class="col-md-12 col-xs-12 col-xs-12">
+                <div class="thank-you-page">
+                
+              <div class="centerdiv">
+                    <h4>
+<img src="/assets/ccavenue_payment/images/ccavenue_logo.gif"/><br/>
+Loading...
+
+</h4>
+                
+                </div>
+                
+			</div>
+		</div>
+	</div>
+</div>
+<form id="PaymentForm">
+<table width="40%" height="100" border='0' align="center">
+			<tr>
+				<td><input type="hidden" name="merchant_id" id="merchant_id" value="{{gateway_settings.merchant_id}}" /> </td>
+			</tr>
+			<tr>
+				<td><input type="hidden" name="order_id" value="{{sale_order.name}}" /></td>
+			</tr>
+			<tr>
+				 
+				<td><input type="hidden" name="currency" value="{{sale_order.currency}}" /></td>
+			</tr>
+			<tr>
+			 
+				<td><input type="hidden" name="amount" value='{{"%0.2f" % sale_order.grand_total | float}}' /></td>
+			</tr>
+			<tr>
+				 
+				<td><input type="hidden" name="redirect_url"
+					value="https://{{frappe.local.request.host}}/ccavenue_payment_response" />
+				</td>
+			</tr>
+			<tr>
+			 
+				<td><input type="hidden" name="cancel_url"
+					value="https://{{frappe.local.request.host}}" />
+				</td>
+			</tr>
+			<tr>
+				 
+				<td><input type="hidden" name="language" id="language" value="EN" /></td>
+			</tr>
+			 
+			<tr>
+				 
+				<td><input type="hidden" name="billing_name" value="{{sale_order.contact_display}}" /></td>
+			</tr>
+			<tr>
+				 
+				<td><input type="hidden" name="billing_address"
+					value="{{billing_info.address_line1}} {{billing_info.address_line2}}" /></td>
+			</tr>
+			<tr>
+				 
+				<td><input type="hidden" name="billing_city" value="{{billing_info.city}}" /></td>
+			</tr>
+			<tr>
+				 
+				<td><input type="hidden" name="billing_state" value="{{billing_info.state}}" /></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="billing_zip" value="{{billing_info.pincode}}" /></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="billing_country" value="{{billing_info.country}}" />
+				</td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="billing_tel"  value="{{billing_info.phone}}" />
+				</td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="billing_email"
+					value="{{frappe.session.user}}" /></td>
+			</tr>
+			 
+			<tr>
+				
+				<td><input type="hidden" name="delivery_name" value="{{sale_order.contact_display}}"  />
+				</td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="delivery_address"
+					 value="{{shipping_info.address_line1}} {{shipping_info.address_line2}}" /></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="delivery_city"  value="{{shipping_info.city}}" />
+				</td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="delivery_state"  value="{{shipping_info.state}}"/>
+				</td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="delivery_zip"  value="{{shipping_info.pincode}}"/></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="delivery_country"  value="{{shipping_info.country}}" />
+				</td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="delivery_tel"  value="{{shipping_info.phone}}" />
+				</td>
+			</tr>
+			<tr>
+				
+				<td><input type="hidden" name="merchant_param1"
+					value="" /></td>
+			</tr>
+			<tr>
+				
+				<td><input type="hidden" name="merchant_param2"
+					value="" /></td>
+			</tr>
+			<tr>
+				
+				<td><input type="hidden" name="merchant_param3"
+					value="" /></td>
+			</tr>
+			<tr>
+				
+				<td><input type="hidden" name="merchant_param4"
+					value="" /></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="merchant_param5"
+					value="" /></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="promo_code" value=""/></td>
+			</tr>
+			<tr>
+			
+				<td><input type="hidden" name="customer_identifier" value=""/></td>
+			</tr>
+			<tr>
+			
+			</tr>
+			</table>
+		</form>
+	<form id="nonseamless" method="post" name="redirect" action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction" >
+	</form>
+<style type="text/css">
+		.centerdiv{
+	 width: 510px;
+    margin: 30% auto;
+    text-align: center;
+}
+.centerdiv h4{
+	 margin-bottom: 35px;
+}
+		.th-txt {
+    min-height: 400px;
+    background: #fff;
+    margin: 20px;
+    padding: 20px;
+}
+@media screen and (min-width: 768px){
+.thank-you-page {
+    width: 570px;
+    margin: 0 auto;
+    float: none;
+    text-align: center;
+}
+}
+.th-txt  img
+{
+
+    margin-bottom: 20px;
+ 
+}
+	</style>
+{% endblock %}
