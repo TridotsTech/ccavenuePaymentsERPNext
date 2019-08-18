@@ -1,6 +1,6 @@
 ## CCAvenue Payment
 
-CCAvenue Payment Gateway
+CCAvenue Payment Gateway Integration for ERPNext
 
 #### License
 
